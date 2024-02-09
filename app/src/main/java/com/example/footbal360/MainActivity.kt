@@ -52,6 +52,7 @@ import coil.size.Size
 import com.example.footbal360.data.FootballRepositoryImpl
 import com.example.footbal360.data.RetrofitInstance
 import com.example.footbal360.data.model.sections.Post
+import com.example.footbal360.ui.screens.BottomSheetPostsViewModel
 import com.example.footbal360.ui.screens.ChipsViewModel
 import com.example.footbal360.ui.screens.FootballViewModel
 import com.example.footbal360.ui.screens.MainScreen
@@ -84,6 +85,15 @@ class MainActivity : ComponentActivity() {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return ChipsViewModel(FootballRepositoryImpl(RetrofitInstance.api))
+                        as T
+            }
+        }
+    })
+
+    private val bottomSheetPostsViewModel by viewModels<BottomSheetPostsViewModel>(factoryProducer = {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return BottomSheetPostsViewModel(FootballRepositoryImpl(RetrofitInstance.api))
                         as T
             }
         }
@@ -148,6 +158,7 @@ class MainActivity : ComponentActivity() {
                             footballViewModel = footballViewModel,
                             storiesViewModel = storiesViewModel,
                             chipsViewModel = chipsViewModel,
+                            bottomSheetPostsViewModel = bottomSheetPostsViewModel,
                             paddingValues = paddingValues
                         )
                     }

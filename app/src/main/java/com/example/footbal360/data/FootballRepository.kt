@@ -15,4 +15,6 @@ interface FootballRepository {
     suspend fun getStories():Flow<Result<Stories>>
 
     suspend fun getYourChips():Flow<Result<Chips>>
+
+    suspend fun getBottomSheetPosts():Flow<Result<AllPosts>>
 }

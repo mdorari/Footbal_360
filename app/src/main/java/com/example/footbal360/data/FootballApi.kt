@@ -8,9 +8,15 @@ import retrofit2.http.Query
 
 interface FootballApi {
 
-    @GET("cms/v2/sections/page/news-new")
-    suspend fun getAllPosts(): AllPosts
 
+    /*
+    https://football360.ir/api/cms/v2/sections/page/explorer/?order_type=m&limit=5
+
+    ?order_type=m&limit=5
+     */
+    @GET("cms/v2/sections/page/explorer/")
+    suspend fun getBottomSheetPosts(@Query("order_type") orderType:String = "m",
+                               @Query("limit") limit:String = "20"):AllPosts
     /*
     https://football360.ir/api/cms/v2/sections/page/news-new/?key=highlights
     "key": "highlights",
@@ -30,7 +36,7 @@ interface FootballApi {
      */
     @GET("cms/v2/sections/page/explorer/")
     suspend fun getSliderPosts(@Query("order_type") orderType:String = "m",
-                               @Query("limit") limit:String = "5"):AllPosts
+                               @Query("limit") limit:String = "1"):AllPosts
 
     /*
     https://football360.ir/api/story/category/

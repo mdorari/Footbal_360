@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -33,6 +34,9 @@ import coil.size.Size
 import com.example.footbal360.R
 import com.example.footbal360.data.model.sections.Post
 import com.example.footbal360.ui.theme.sliderPadding
+import com.example.footbal360.ui.theme.titleLineHeight
+import com.example.footbal360.ui.theme.titleTextSize
+import com.example.footbal360.ui.theme.titleTopAndBottomPadding
 
 @Composable
 fun SliderPost(
@@ -87,7 +91,7 @@ fun SliderPost(
             if (imageState is AsyncImagePainter.State.Success) {
                 Image(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .aspectRatio(1.78f)
                         .height(200.dp)
                         .clip(RoundedCornerShape(12.dp)),
                     painter = imageState.painter,
@@ -96,11 +100,17 @@ fun SliderPost(
                 )
             }
             Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        top = titleTopAndBottomPadding,
+                        bottom = titleTopAndBottomPadding
+                    ),
                 text = post.title,
-                fontSize = 20.sp,
+                fontSize = titleTextSize,
                 fontFamily = FontFamily(Font(R.font.iran_sansx_bold)),
                 fontStyle = FontStyle.Normal,
-                lineHeight = 28.sp,
+                lineHeight = titleLineHeight,
                 color = Color.Black,
                 fontWeight = FontWeight.Normal,
                 textAlign = TextAlign.End

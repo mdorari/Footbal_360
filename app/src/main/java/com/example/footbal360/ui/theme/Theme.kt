@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
@@ -74,3 +75,8 @@ val startingPadding = 8.dp
 val storyPadding = 6.dp
 val sliderPadding = 6.dp
 val chipsSpacer = 10.dp
+val subtitleTextSize = 10.sp
+val subtitleLineHeight = 12.sp
+val titleTextSize = 16.sp
+val titleLineHeight = 18.sp
+val titleTopAndBottomPadding = 6.dp
