@@ -1,11 +1,9 @@
-package com.example.footbal360.ui.screens
+package com.example.footbal360.ui.screens.mainScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.footbal360.data.FootballRepository
 import com.example.footbal360.data.Result
-import com.example.footbal360.data.model.sections.AllPosts
-import com.example.footbal360.data.model.sections.Data
 import com.example.footbal360.data.model.story.Stories
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow

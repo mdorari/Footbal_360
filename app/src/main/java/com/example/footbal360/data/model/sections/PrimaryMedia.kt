@@ -2,7 +2,7 @@ package com.example.footbal360.data.model.sections
 
 data class PrimaryMedia(
     val cover_image: String,
-    val duration: Int,
+    val duration: Int?,
     val `file`: String,
     val hour_duration: Int,
     val id: String,

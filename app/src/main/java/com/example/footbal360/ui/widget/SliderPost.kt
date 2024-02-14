@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -25,6 +26,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImagePainter
@@ -40,7 +43,11 @@ import com.example.footbal360.ui.theme.titleTopAndBottomPadding
 
 @Composable
 fun SliderPost(
-    post: Post
+    post: Post,
+    width:Dp,
+    textSize:TextUnit,
+    textLineHeight: TextUnit,
+    cornerRadius:Dp
 ) {
 
     val imageState = rememberAsyncImagePainter(
@@ -53,7 +60,7 @@ fun SliderPost(
     Box(
         modifier = Modifier
             .fillMaxHeight()
-            .width(320.dp),
+            .width(width),
         contentAlignment = Alignment.TopCenter
     ) {
         Column(
@@ -89,15 +96,27 @@ fun SliderPost(
                 }
             }
             if (imageState is AsyncImagePainter.State.Success) {
-                Image(
+                Box(
                     modifier = Modifier
                         .aspectRatio(1.78f)
                         .height(200.dp)
-                        .clip(RoundedCornerShape(12.dp)),
-                    painter = imageState.painter,
-                    contentDescription = post.primary_media.title,
-                    contentScale = ContentScale.Crop
-                )
+                        .clip(RoundedCornerShape(cornerRadius)),
+                    contentAlignment = Alignment.BottomStart
+                ) {
+                    Image(
+                        modifier = Modifier.fillMaxSize(),
+                        painter = imageState.painter,
+                        contentDescription = post.primary_media.title,
+                        contentScale = ContentScale.Crop
+                    )
+                    if (post.primary_media.duration != null){
+                        VideoDuration(
+                            hours = post.primary_media.hour_duration,
+                            minutes = post.primary_media.minute_duration,
+                            seconds = post.primary_media.second_duration
+                        )
+                    }
+                }
             }
             Text(
                 modifier = Modifier
@@ -107,10 +126,10 @@ fun SliderPost(
                         bottom = titleTopAndBottomPadding
                     ),
                 text = post.title,
-                fontSize = titleTextSize,
+                fontSize = textSize,
                 fontFamily = FontFamily(Font(R.font.iran_sansx_bold)),
                 fontStyle = FontStyle.Normal,
-                lineHeight = titleLineHeight,
+                lineHeight = textLineHeight,
                 color = Color.Black,
                 fontWeight = FontWeight.Normal,
                 textAlign = TextAlign.End

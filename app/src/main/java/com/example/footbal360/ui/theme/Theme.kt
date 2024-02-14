@@ -13,9 +13,12 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
+import com.example.footbal360.R
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -75,8 +78,12 @@ val startingPadding = 8.dp
 val storyPadding = 6.dp
 val sliderPadding = 6.dp
 val chipsSpacer = 10.dp
-val subtitleTextSize = 10.sp
-val subtitleLineHeight = 12.sp
+val subtitleTextSize = 12.sp
+val subtitleLineHeight = 14.sp
 val titleTextSize = 16.sp
 val titleLineHeight = 18.sp
+val videoDurationTextSize = 10.sp
+val videoDurationTextLineHeight = 12.sp
 val titleTopAndBottomPadding = 6.dp
+val boldTypeFace = FontFamily(Font(R.font.iran_sansx_bold))
+val semiBoldTypeFace = FontFamily(Font(R.font.iran_sansx_demi_bold))

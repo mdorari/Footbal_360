@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -93,15 +94,36 @@ fun BottomSection(data: Data) {
             }
         }
         if (bannerImageState is AsyncImagePainter.State.Success) {
-            Image(
+//            Image(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .aspectRatio(1.78f)
+//                    .clip(RoundedCornerShape(10.dp)),
+//                painter = bannerImageState.painter,
+//                contentDescription = bannerPost.title,
+//                contentScale = ContentScale.Crop
+//            )
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1.78f)
                     .clip(RoundedCornerShape(10.dp)),
-                painter = bannerImageState.painter,
-                contentDescription = bannerPost.title,
-                contentScale = ContentScale.Crop
-            )
+                contentAlignment = Alignment.BottomStart
+            ) {
+                Image(
+                    modifier = Modifier.fillMaxSize(),
+                    painter = bannerImageState.painter,
+                    contentDescription = bannerPost.primary_media.title,
+                    contentScale = ContentScale.Crop
+                )
+                if (bannerPost.primary_media.duration != null){
+                    VideoDuration(
+                        hours = bannerPost.primary_media.hour_duration,
+                        minutes = bannerPost.primary_media.minute_duration,
+                        seconds = bannerPost.primary_media.second_duration
+                    )
+                }
+            }
         }
         Text(
             modifier = Modifier
@@ -137,7 +159,7 @@ fun BottomSection(data: Data) {
                     if (postImageState is AsyncImagePainter.State.Loading) {
                         Box(
                             modifier = Modifier
-                                .width(150.dp)
+                                .width(130.dp)
                                 .aspectRatio(1.78f),
                             contentAlignment = Alignment.Center
                         ) {
@@ -147,7 +169,7 @@ fun BottomSection(data: Data) {
                     if (postImageState is AsyncImagePainter.State.Error) {
                         Box(
                             modifier = Modifier
-                                .width(150.dp)
+                                .width(130.dp)
                                 .aspectRatio(1.78f)
                                 .background(Color.White)
                                 .clip(RoundedCornerShape(4.dp)),
@@ -157,15 +179,37 @@ fun BottomSection(data: Data) {
                         }
                     }
                     if (postImageState is AsyncImagePainter.State.Success) {
-                        Image(
+//                        Image(
+//                            modifier = Modifier
+//                                .width(130.dp)
+//                                .aspectRatio(1.78f)
+//                                .clip(RoundedCornerShape(4.dp)),
+//                            painter = postImageState.painter,
+//                            contentDescription = post.title,
+//                            contentScale = ContentScale.Crop
+//                        )
+
+                        Box(
                             modifier = Modifier
-                                .width(150.dp)
+                                .width(130.dp)
                                 .aspectRatio(1.78f)
                                 .clip(RoundedCornerShape(4.dp)),
-                            painter = postImageState.painter,
-                            contentDescription = post.title,
-                            contentScale = ContentScale.Crop
-                        )
+                            contentAlignment = Alignment.BottomStart
+                        ) {
+                            Image(
+                                modifier = Modifier.fillMaxSize(),
+                                painter = postImageState.painter,
+                                contentDescription = post.primary_media.title,
+                                contentScale = ContentScale.Crop
+                            )
+                            if (post.primary_media.duration != null){
+                                VideoDuration(
+                                    hours = post.primary_media.hour_duration,
+                                    minutes = post.primary_media.minute_duration,
+                                    seconds = post.primary_media.second_duration
+                                )
+                            }
+                        }
                     }
 
                     Text(

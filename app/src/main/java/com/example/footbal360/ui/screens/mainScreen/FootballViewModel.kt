@@ -1,5 +1,9 @@
-package com.example.footbal360.ui.screens
+package com.example.footbal360.ui.screens.mainScreen
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.footbal360.data.FootballRepository

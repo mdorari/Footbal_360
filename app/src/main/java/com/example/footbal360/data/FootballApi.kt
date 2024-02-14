@@ -65,4 +65,30 @@ interface FootballApi {
      */
     @GET("cms/v2/chips/jadidtarinha/items/")
     suspend fun getNewsChips():Chips
+
+    /*
+    https://football360.ir/api/cms/v2/chips/videos/items/
+     */
+    @GET("cms/v2/chips/videos/items/")
+    suspend fun getVideosChips():Chips
+
+
+    /*
+    https://football360.ir/api/cms/sections/?page=ekhtesasi
+     */
+    @GET("cms/sections/?page=ekhtesasi")
+    suspend fun getEkhtesasiVideos():AllPosts
+
+    /*
+    https://football360.ir/api/cms/v2/sections/page/videos-new/?order_type=m&limit=50
+     */
+    @GET("cms/v2/sections/page/videos-new/?order_type=m&limit=50")
+    suspend fun getAllVideos():AllPosts
+
+
+
+
+
+
+
 }

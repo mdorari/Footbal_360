@@ -1,12 +1,12 @@
-package com.example.footbal360.ui.screens
+package com.example.footbal360.ui.screens.mainScreen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -27,10 +27,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.footbal360.R
 import com.example.footbal360.ui.theme.MainTextColor
 import com.example.footbal360.ui.theme.startingPadding
 import com.example.footbal360.ui.theme.storyPadding
+import com.example.footbal360.ui.theme.titleLineHeight
+import com.example.footbal360.ui.theme.titleTextSize
 import com.example.footbal360.ui.widget.BottomSection
 import com.example.footbal360.ui.widget.Chip
 import com.example.footbal360.ui.widget.SliderPost
@@ -43,7 +46,8 @@ fun MainScreen(
     footballViewModel: FootballViewModel,
     storiesViewModel: StoriesViewModel,
     bottomSheetPostsViewModel: BottomSheetPostsViewModel,
-    chipsViewModel: ChipsViewModel
+    chipsViewModel: ChipsViewModel,
+    navController: NavHostController
 ) {
     val sliderData = footballViewModel.sliderPosts.collectAsState().value
     val storiesData = storiesViewModel.stories.collectAsState().value
@@ -66,19 +70,25 @@ fun MainScreen(
             }
         } else {
             LazyRow(modifier = Modifier
-                .height(300.dp)
+//                .fillMaxHeight()
+                .height(270.dp)
                 .padding(end = startingPadding),
                 reverseLayout = true) {
                 val sliderPosts = sliderData.data.filter { it.key == "slider" }.first().posts
                 items(sliderPosts) { post ->
-                    SliderPost(post = post)
+                    SliderPost(post = post,
+                        width = 320.dp,
+                        textSize = titleTextSize,
+                        textLineHeight = titleLineHeight,
+                        cornerRadius = 12.dp
+                    )
                 }
             }
         }
         
         Text(
             modifier = Modifier
-                .padding(top = 20.dp, bottom = 10.dp, end = startingPadding * 2)
+                .padding(top = 10.dp, bottom = 10.dp, end = startingPadding * 2)
                 .fillMaxWidth(),
             text = "سر ضرب",
             fontFamily = FontFamily(Font(R.font.iran_sansx_bold)),

@@ -113,4 +113,21 @@ class FootballRepositoryImpl(
             emit(Result.Success(bottomPostsFromApi))
         }
     }
+
+    override suspend fun getAllVideosPosts(): Flow<Result<AllPosts>> {
+        return flow {
+            val allVideosFromApi = try {
+                api.getAllVideos()
+            }catch (e: IOException) {
+                e.printStackTrace()
+                emit(Result.Error(message = "Error loading ducks, error type ${e.message}"))
+                return@flow
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                emit(Result.Error(message = "Error loading ducks, error type ${e.message}"))
+                return@flow
+            }
+            emit(Result.Success(allVideosFromApi))
+        }
+    }
 }
