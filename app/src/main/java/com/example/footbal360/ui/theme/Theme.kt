@@ -75,15 +75,18 @@ fun Footbal360Theme(
 }
 
 val startingPadding = 8.dp
-val storyPadding = 6.dp
+val storyPadding = 4.dp
 val sliderPadding = 6.dp
 val chipsSpacer = 10.dp
-val subtitleTextSize = 12.sp
-val subtitleLineHeight = 14.sp
+val subtitleTextSize = 14.sp
+val subtitleLineHeight = 16.sp
 val titleTextSize = 16.sp
-val titleLineHeight = 18.sp
+val titleLineHeight = 26.sp
+val h2TextSize = 18.sp
+val h2LetterSpacing = (-0.05).sp
 val videoDurationTextSize = 10.sp
 val videoDurationTextLineHeight = 12.sp
 val titleTopAndBottomPadding = 6.dp
+val storyCornerRadius = 8.dp
 val boldTypeFace = FontFamily(Font(R.font.iran_sansx_bold))
 val semiBoldTypeFace = FontFamily(Font(R.font.iran_sansx_demi_bold))

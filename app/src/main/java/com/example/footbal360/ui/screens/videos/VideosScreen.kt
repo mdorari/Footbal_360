@@ -15,15 +15,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.footbal360.R
 import com.example.footbal360.ui.theme.MainTextColor
+import com.example.footbal360.ui.theme.h2TextSize
 import com.example.footbal360.ui.theme.startingPadding
 import com.example.footbal360.ui.theme.subtitleLineHeight
 import com.example.footbal360.ui.theme.subtitleTextSize
@@ -60,10 +63,13 @@ fun VideosScreen(
                         .fillMaxWidth(),
                     text = section.title,
                     fontFamily = FontFamily(Font(R.font.iran_sansx_bold)),
-                    fontSize = titleTextSize,
-                    lineHeight = titleLineHeight,
+                    fontSize = h2TextSize,
+                    lineHeight = h2TextSize,
                     color = MainTextColor,
-                    textAlign = TextAlign.Right)
+                    textAlign = TextAlign.Start,
+                    style = TextStyle(textDirection = TextDirection.Content)
+
+                )
                 LazyRow(modifier = Modifier.height(180.dp), reverseLayout = true) {
                     val videoPosts = section.posts
                     items(videoPosts) { post ->

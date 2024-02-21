@@ -29,10 +29,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImagePainter
@@ -41,9 +43,13 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.example.footbal360.R
 import com.example.footbal360.data.model.story.Result
+import com.example.footbal360.ui.theme.MainTextColor
 import com.example.footbal360.ui.theme.Typography
 import com.example.footbal360.ui.theme.startingPadding
+import com.example.footbal360.ui.theme.storyCornerRadius
 import com.example.footbal360.ui.theme.storyPadding
+import com.example.footbal360.ui.theme.subtitleLineHeight
+import com.example.footbal360.ui.theme.subtitleTextSize
 
 @Composable
 fun Story(
@@ -51,8 +57,8 @@ fun Story(
 ) {
     Box(
         modifier = Modifier
-            .height(220.dp)
-            .width(120.dp)
+            .height(154.dp)
+            .width(106.dp)
             .padding(storyPadding)
     ) {
         val storyImageState = rememberAsyncImagePainter(
@@ -74,7 +80,8 @@ fun Story(
             Box(
                 modifier = Modifier
                     .width(150.dp)
-                    .height(200.dp),
+                    .height(200.dp)
+                    .clip(RoundedCornerShape(storyCornerRadius)),
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator()
@@ -84,7 +91,9 @@ fun Story(
             Box(
                 modifier = Modifier
                     .width(150.dp)
-                    .height(200.dp),
+                    .height(200.dp)
+                    .clip(RoundedCornerShape(storyCornerRadius))
+                    .background(MainTextColor),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -100,32 +109,38 @@ fun Story(
                 modifier = Modifier
                     .fillMaxHeight()
                     .width(120.dp)
-                    .clip(RoundedCornerShape(10.dp)),
+                    .clip(RoundedCornerShape(storyCornerRadius)),
                 painter = storyImageState.painter,
                 contentDescription = story.title,
                 contentScale = ContentScale.FillHeight
             )
         }
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .clip(RoundedCornerShape(10.dp))
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        Color.Black.copy(alpha = 0f),
-                        Color.Black.copy(alpha = 0f),
-                        Color.Black.copy(alpha = 0.3f)
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .clip(RoundedCornerShape(storyCornerRadius))
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            Color.Black.copy(alpha = 0f),
+                            Color.Black.copy(alpha = 0f),
+                            Color.Black.copy(alpha = 0.3f)
 
+                        )
                     )
                 )
-            )
 
         )
         Column(
             Modifier
                 .fillMaxSize()
-                .padding(6.dp),
+                .padding(
+                    start = 12.dp,
+                    top = 6.dp,
+                    end = 6.dp,
+                    bottom = 6.dp
+                ),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Row(
@@ -135,8 +150,8 @@ fun Story(
             ) {
                 Box(
                     modifier = Modifier
-                        .width(28.dp)
-                        .height(28.dp)
+                        .width(20.dp)
+                        .height(20.dp)
                         .clip(CircleShape)
                         .background(Color.Green),
                     contentAlignment = Alignment.Center
@@ -144,8 +159,8 @@ fun Story(
                     if (storyIconState is AsyncImagePainter.State.Success) {
                         Image(
                             modifier = Modifier
-                                .width(24.dp)
-                                .height(24.dp)
+                                .width(18.dp)
+                                .height(18.dp)
                                 .clip(CircleShape),
                             painter = storyIconState.painter,
                             contentDescription = "Story Icon",
@@ -159,11 +174,13 @@ fun Story(
                     .fillMaxWidth(),
                 text = story.title,
                 color = Color.White,
-                fontSize = 16.sp,
+                fontSize = subtitleTextSize,
+                lineHeight = subtitleLineHeight,
                 maxLines = 2,
                 fontFamily = FontFamily(Font(R.font.iran_sansx_bold)),
-                textAlign = TextAlign.End,
-                letterSpacing = (-0.05).sp
+                textAlign = TextAlign.Start,
+                letterSpacing = (-0.05).sp,
+                style = TextStyle(textDirection = TextDirection.Content)
             )
         }
     }

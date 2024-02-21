@@ -19,4 +19,6 @@ interface FootballRepository {
     suspend fun getBottomSheetPosts():Flow<Result<AllPosts>>
 
     suspend fun getAllVideosPosts():Flow<Result<AllPosts>>
+
+    suspend fun getPostByPostCode(postCode:String):Flow<Result<AllPosts>>
 }

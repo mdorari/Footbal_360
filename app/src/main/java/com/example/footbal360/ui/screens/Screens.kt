@@ -5,7 +5,10 @@ enum class Screens {
     VIDEOS,
     MATCHES,
     LEAGUES,
-    COMPETITION
+    COMPETITION,
+    VIDEO_POST,
+    NORMAL_POST,
+    STORY
 }
 
 

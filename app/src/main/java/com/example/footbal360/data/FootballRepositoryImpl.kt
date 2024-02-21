@@ -52,11 +52,11 @@ class FootballRepositoryImpl(
                 api.getSliderPosts()
             } catch (e: IOException) {
                 e.printStackTrace()
-                emit(Result.Error(message = "Error loading ducks, error type ${e.message}"))
+                emit(Result.Error(message = "Error loading sliders, error type ${e.message}"))
                 return@flow
             } catch (e: HttpException) {
                 e.printStackTrace()
-                emit(Result.Error(message = "Error loading ducks, error type ${e.message}"))
+                emit(Result.Error(message = "Error loading sliders, error type ${e.message}"))
                 return@flow
             }
             emit(Result.Success(explorerPostsFromApi))
@@ -69,11 +69,11 @@ class FootballRepositoryImpl(
                 api.getStories()
             }catch (e: IOException) {
                 e.printStackTrace()
-                emit(Result.Error(message = "Error loading ducks, error type ${e.message}"))
+                emit(Result.Error(message = "Error loading stories, error type ${e.message}"))
                 return@flow
             } catch (e: HttpException) {
                 e.printStackTrace()
-                emit(Result.Error(message = "Error loading ducks, error type ${e.message}"))
+                emit(Result.Error(message = "Error loading stories, error type ${e.message}"))
                 return@flow
             }
             emit(Result.Success(storiesFromApi))
@@ -86,11 +86,11 @@ class FootballRepositoryImpl(
                 api.getYoursChips()
             }catch (e: IOException) {
                 e.printStackTrace()
-                emit(Result.Error(message = "Error loading ducks, error type ${e.message}"))
+                emit(Result.Error(message = "Error loading yourChips, error type ${e.message}"))
                 return@flow
             } catch (e: HttpException) {
                 e.printStackTrace()
-                emit(Result.Error(message = "Error loading ducks, error type ${e.message}"))
+                emit(Result.Error(message = "Error loading yourChips, error type ${e.message}"))
                 return@flow
             }
             emit(Result.Success(chipsFromApi))
@@ -103,11 +103,11 @@ class FootballRepositoryImpl(
                 api.getBottomSheetPosts()
             }catch (e: IOException) {
                 e.printStackTrace()
-                emit(Result.Error(message = "Error loading ducks, error type ${e.message}"))
+                emit(Result.Error(message = "Error loading bottomSheetPosts, error type ${e.message}"))
                 return@flow
             } catch (e: HttpException) {
                 e.printStackTrace()
-                emit(Result.Error(message = "Error loading ducks, error type ${e.message}"))
+                emit(Result.Error(message = "Error loading bottomSheetPosts, error type ${e.message}"))
                 return@flow
             }
             emit(Result.Success(bottomPostsFromApi))
@@ -120,14 +120,31 @@ class FootballRepositoryImpl(
                 api.getAllVideos()
             }catch (e: IOException) {
                 e.printStackTrace()
-                emit(Result.Error(message = "Error loading ducks, error type ${e.message}"))
+                emit(Result.Error(message = "Error loading videos, error type ${e.message}"))
                 return@flow
             } catch (e: HttpException) {
                 e.printStackTrace()
-                emit(Result.Error(message = "Error loading ducks, error type ${e.message}"))
+                emit(Result.Error(message = "Error loading videos, error type ${e.message}"))
                 return@flow
             }
             emit(Result.Success(allVideosFromApi))
+        }
+    }
+
+    override suspend fun getPostByPostCode(postCode:String): Flow<Result<AllPosts>> {
+        return flow {
+            val postFromApi = try {
+                api.getPostByPostCode(postCode)
+            } catch (e: IOException) {
+                e.printStackTrace()
+                emit(Result.Error(message = "Error loading videoPost, error type ${e.message}"))
+                return@flow
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                emit(Result.Error(message = "Error loading videoPost, error type ${e.message}"))
+                return@flow
+            }
+            emit(Result.Success(postFromApi))
         }
     }
 }

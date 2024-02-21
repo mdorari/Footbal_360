@@ -1,6 +1,8 @@
 package com.example.footbal360.ui.widget
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,11 +23,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -47,7 +51,8 @@ fun SliderPost(
     width:Dp,
     textSize:TextUnit,
     textLineHeight: TextUnit,
-    cornerRadius:Dp
+    cornerRadius:Dp,
+    onItemClick: (Post) -> Unit = {}
 ) {
 
     val imageState = rememberAsyncImagePainter(
@@ -60,7 +65,10 @@ fun SliderPost(
     Box(
         modifier = Modifier
             .fillMaxHeight()
-            .width(width),
+            .width(width)
+            .clickable {
+                       onItemClick(post)
+            },
         contentAlignment = Alignment.TopCenter
     ) {
         Column(
@@ -73,7 +81,7 @@ fun SliderPost(
             if (imageState is AsyncImagePainter.State.Loading) {
                 Box(
                     modifier = Modifier
-                        .width(200.dp)
+                        .aspectRatio(1.78f)
                         .height(200.dp),
                     contentAlignment = Alignment.Center
                 ) {
@@ -83,7 +91,7 @@ fun SliderPost(
             if (imageState is AsyncImagePainter.State.Error) {
                 Box(
                     modifier = Modifier
-                        .width(200.dp)
+                        .aspectRatio(1.78f)
                         .height(200.dp),
                     contentAlignment = Alignment.Center
                 ) {
@@ -132,7 +140,8 @@ fun SliderPost(
                 lineHeight = textLineHeight,
                 color = Color.Black,
                 fontWeight = FontWeight.Normal,
-                textAlign = TextAlign.End
+                textAlign = TextAlign.Start,
+                style = TextStyle(textDirection = TextDirection.Content)
             )
 //                Text(text = post.sub_title)
         }

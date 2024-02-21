@@ -46,7 +46,7 @@ import com.example.footbal360.ui.screens.MyNavigation
 import com.example.footbal360.ui.screens.getBottomNavigationItems
 import com.example.footbal360.ui.screens.mainScreen.BottomSheetPostsViewModel
 import com.example.footbal360.ui.screens.mainScreen.ChipsViewModel
-import com.example.footbal360.ui.screens.mainScreen.FootballViewModel
+import com.example.footbal360.ui.screens.mainScreen.MainScreenViewModel
 import com.example.footbal360.ui.screens.mainScreen.StoriesViewModel
 import com.example.footbal360.ui.screens.videos.VideosViewModel
 import com.example.footbal360.ui.theme.Background
@@ -57,37 +57,10 @@ import kotlinx.coroutines.flow.collectLatest
 
 class MainActivity : ComponentActivity() {
 
-    private val footballViewModel by viewModels<FootballViewModel>(factoryProducer = {
+    private val mainScreenViewModel by viewModels<MainScreenViewModel>(factoryProducer = {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return FootballViewModel(FootballRepositoryImpl(RetrofitInstance.api))
-                        as T
-            }
-        }
-    })
-
-    private val storiesViewModel by viewModels<StoriesViewModel>(factoryProducer = {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return StoriesViewModel(FootballRepositoryImpl(RetrofitInstance.api))
-                        as T
-            }
-        }
-    })
-
-    private val chipsViewModel by viewModels<ChipsViewModel>(factoryProducer = {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return ChipsViewModel(FootballRepositoryImpl(RetrofitInstance.api))
-                        as T
-            }
-        }
-    })
-
-    private val bottomSheetPostsViewModel by viewModels<BottomSheetPostsViewModel>(factoryProducer = {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return BottomSheetPostsViewModel(FootballRepositoryImpl(RetrofitInstance.api))
+                return MainScreenViewModel(FootballRepositoryImpl(RetrofitInstance.api))
                         as T
             }
         }
@@ -147,7 +120,6 @@ class MainActivity : ComponentActivity() {
                                 bottomNavigationItems.forEachIndexed { index, item ->
                                     val currentSelectedItem =
                                         bottomNavigationItems[selectedItemIndex]
-                                    Log.d("Mehrdad", "onCreate: $currentSelectedItem")
                                     NavigationBarItem(
                                         selected = selectedItemIndex == index,
                                         onClick = {
@@ -199,8 +171,8 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     ) { paddingValues ->
-                        LaunchedEffect(key1 = footballViewModel.showErrorToastChannel) {
-                            footballViewModel.showErrorToastChannel.collectLatest { show ->
+                        LaunchedEffect(key1 = mainScreenViewModel.showErrorToastChannel) {
+                            mainScreenViewModel.showErrorToastChannel.collectLatest { show ->
                                 if (show) {
                                     Toast.makeText(
                                         context,
@@ -210,24 +182,10 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                         }
-                        LaunchedEffect(key1 = storiesViewModel.showErrorToastChannel) {
-                            storiesViewModel.showErrorToastChannel.collectLatest { show ->
-                                if (show) {
-                                    Toast.makeText(
-                                        context,
-                                        "Error loading stories",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
-                        }
                         MyNavigation(
                             navController = navController,
                             paddingValues = paddingValues,
-                            footballViewModel = footballViewModel,
-                            storiesViewModel = storiesViewModel,
-                            bottomSheetPostsViewModel = bottomSheetPostsViewModel,
-                            chipsViewModel = chipsViewModel,
+                            mainScreenViewModel = mainScreenViewModel,
                             videosViewModel = videosViewModel
                         )
 //                        MainScreen(

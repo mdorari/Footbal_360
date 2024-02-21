@@ -86,6 +86,13 @@ interface FootballApi {
     suspend fun getAllVideos():AllPosts
 
 
+    /*
+    https://football360.ir/api/cms/v2/posts/?code=2024021524
+     */
+    @GET("cms/v2/posts/")
+    suspend fun getPostByPostCode(@Query("code") code:String):AllPosts
+
+
 
 
 

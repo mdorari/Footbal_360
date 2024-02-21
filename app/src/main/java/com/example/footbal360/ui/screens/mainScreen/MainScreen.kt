@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,14 +21,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.footbal360.R
+import com.example.footbal360.ui.screens.Screens
 import com.example.footbal360.ui.theme.MainTextColor
+import com.example.footbal360.ui.theme.h2LetterSpacing
+import com.example.footbal360.ui.theme.h2TextSize
 import com.example.footbal360.ui.theme.startingPadding
 import com.example.footbal360.ui.theme.storyPadding
 import com.example.footbal360.ui.theme.titleLineHeight
@@ -43,16 +46,13 @@ import com.example.footbal360.ui.widget.Story
 @Composable
 fun MainScreen(
     paddingValues: PaddingValues,
-    footballViewModel: FootballViewModel,
-    storiesViewModel: StoriesViewModel,
-    bottomSheetPostsViewModel: BottomSheetPostsViewModel,
-    chipsViewModel: ChipsViewModel,
+    mainScreenViewModel: MainScreenViewModel,
     navController: NavHostController
 ) {
-    val sliderData = footballViewModel.sliderPosts.collectAsState().value
-    val storiesData = storiesViewModel.stories.collectAsState().value
-    val chipsData = chipsViewModel.chips.collectAsState().value
-    val bottomSheetData = bottomSheetPostsViewModel.bottomPosts.collectAsState().value
+    val sliderData = mainScreenViewModel.sliderPosts.collectAsState().value
+    val storiesData = mainScreenViewModel.stories.collectAsState().value
+    val chipsData = mainScreenViewModel.chips.collectAsState().value
+    val bottomSheetData = mainScreenViewModel.bottomPosts.collectAsState().value
 
     Column(
         modifier = Modifier
@@ -70,7 +70,6 @@ fun MainScreen(
             }
         } else {
             LazyRow(modifier = Modifier
-//                .fillMaxHeight()
                 .height(270.dp)
                 .padding(end = startingPadding),
                 reverseLayout = true) {
@@ -81,7 +80,9 @@ fun MainScreen(
                         textSize = titleTextSize,
                         textLineHeight = titleLineHeight,
                         cornerRadius = 12.dp
-                    )
+                    ){
+                        navController.navigate(route = Screens.VIDEO_POST.name + "/${it.code}")
+                    }
                 }
             }
         }
@@ -92,9 +93,11 @@ fun MainScreen(
                 .fillMaxWidth(),
             text = "سر ضرب",
             fontFamily = FontFamily(Font(R.font.iran_sansx_bold)),
-            fontSize = 22.sp,
+            fontSize = h2TextSize,
+            letterSpacing = h2LetterSpacing,
             color = MainTextColor,
-            textAlign = TextAlign.Right)
+            textAlign = TextAlign.Start,
+            style = TextStyle(textDirection = TextDirection.Content))
 
         if (storiesData.results.isEmpty()){
             Box(modifier = Modifier.fillMaxWidth(),
@@ -119,9 +122,11 @@ fun MainScreen(
                 .fillMaxWidth(),
             text = "دسته ها",
             fontFamily = FontFamily(Font(R.font.iran_sansx_bold)),
-            fontSize = 22.sp,
+            fontSize = h2TextSize,
             color = MainTextColor,
-            textAlign = TextAlign.Right)
+            textAlign = TextAlign.Start,
+            style = TextStyle(textDirection = TextDirection.Content)
+        )
 
         if (chipsData.data.isNotEmpty()){
             LazyRow(modifier = Modifier.height(40.dp),
@@ -142,15 +147,13 @@ fun MainScreen(
             .background(Color.White))
 
         if (bottomSheetData.data.isNotEmpty()){
-            Column(modifier = Modifier.fillMaxWidth().padding(storyPadding)){
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .padding(storyPadding)){
                 val bottomSheetPosts = bottomSheetData.data.subList(1,5)
                 bottomSheetPosts.forEach { data->
                     BottomSection(data = data)
                 }
-//                BottomSection(data = bottomSheetPosts)
-//                items(bottomSheetPosts){section->
-//                    BottomSection(bottomSheetPosts)
-//                }
             }
         }
     }
@@ -160,8 +163,12 @@ fun MainScreen(
 //@Composable
 //fun MainScreenPreview() {
 //    MainScreen(
-//        modifier = Modifier,
-//        viewModel = FootballViewModel(FootballRepositoryImpl(RetrofitInstance.api))
+//        paddingValues = PaddingValues(),
+//        FootballViewModel(FootballRepositoryImpl(RetrofitInstance.api)),
+//        StoriesViewModel(FootballRepositoryImpl(RetrofitInstance.api)),
+//        BottomSheetPostsViewModel(FootballRepositoryImpl(RetrofitInstance.api)),
+//        ChipsViewModel(FootballRepositoryImpl(RetrofitInstance.api)),
+//        navController = rememberNavController()
 //    )
 //}
 

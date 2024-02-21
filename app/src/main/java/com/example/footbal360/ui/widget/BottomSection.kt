@@ -23,9 +23,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImagePainter
@@ -69,9 +71,10 @@ fun BottomSection(data: Data) {
             fontSize = titleTextSize,
             lineHeight = titleLineHeight,
             color = MainTextColor,
-            textAlign = TextAlign.End,
+            textAlign = TextAlign.Start,
             maxLines = 2,
-            letterSpacing = (-0.05).sp
+            letterSpacing = (-0.05).sp,
+            style = TextStyle(textDirection = TextDirection.Content)
         )
         if (bannerImageState is AsyncImagePainter.State.Loading) {
             Box(
@@ -136,7 +139,8 @@ fun BottomSection(data: Data) {
             fontFamily = FontFamily(Font(R.font.iran_sansx_demi_bold)),
             fontSize = titleTextSize,
             color = MainTextColor,
-            textAlign = TextAlign.End,
+            textAlign = TextAlign.Start,
+            style = TextStyle(textDirection = TextDirection.Content),
             maxLines = 2,
             letterSpacing = (-0.05).sp
         )
@@ -215,7 +219,8 @@ fun BottomSection(data: Data) {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         text = post.title,
-                        textAlign = TextAlign.Right,
+                        textAlign = TextAlign.Start,
+                        style = TextStyle(textDirection = TextDirection.Content),
                         fontFamily = FontFamily(Font(R.font.iran_sansx_demi_bold)),
                         color = MainTextColor,
                         fontSize = subtitleTextSize,
