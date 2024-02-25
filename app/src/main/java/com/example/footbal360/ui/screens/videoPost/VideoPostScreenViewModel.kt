@@ -10,15 +10,18 @@ import com.example.footbal360.data.FootballRepositoryImpl
 import com.example.footbal360.data.Result
 import com.example.footbal360.data.RetrofitInstance
 import com.example.footbal360.data.model.sections.AllPosts
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class VideoPostScreenViewModel (
+@HiltViewModel
+class VideoPostScreenViewModel @Inject constructor(
     private val footballRepository: FootballRepository,
-    private val postCode: String
+//    private val postCode: String
 ):ViewModel(){
     private val _videoPost =
         MutableStateFlow<AllPosts>(AllPosts(count = 0, data = emptyList(), limit = 5, offset = 0))
@@ -30,7 +33,7 @@ class VideoPostScreenViewModel (
 
     fun getPost(){
         viewModelScope.launch {
-            footballRepository.getPostByPostCode(postCode = postCode).collectLatest { result->
+            footballRepository.getPostByPostCode(postCode = "2024021418").collectLatest { result->
                 when(result){
                     is Result.Error -> {
                         Log.d("TAG", "getStories: ${result.message}")
@@ -46,8 +49,8 @@ class VideoPostScreenViewModel (
     }
 }
 
-class VideoViewModelFactory(private val postCode: String?):
-        ViewModelProvider.NewInstanceFactory(){
-    override fun <T : ViewModel> create(modelClass: Class<T>): T =
-        VideoPostScreenViewModel(postCode = "$postCode", footballRepository = FootballRepositoryImpl(RetrofitInstance.api)) as T
-        }
+//class VideoViewModelFactory(private val postCode: String?):
+//        ViewModelProvider.NewInstanceFactory(){
+//    override fun <T : ViewModel> create(modelClass: Class<T>): T =
+//        VideoPostScreenViewModel(postCode = "$postCode", footballRepository = FootballRepositoryImpl(RetrofitInstance.api)) as T
+//        }

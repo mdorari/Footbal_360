@@ -6,13 +6,16 @@ import androidx.lifecycle.viewModelScope
 import com.example.footbal360.data.FootballRepository
 import com.example.footbal360.data.Result
 import com.example.footbal360.data.model.sections.AllPosts
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class VideosViewModel(
+@HiltViewModel
+class VideosViewModel @Inject constructor(
     private val footballRepository: FootballRepository
 ):ViewModel() {
     private val _videos =

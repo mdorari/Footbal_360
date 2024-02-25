@@ -2,23 +2,14 @@ package com.example.footbal360.ui.screens
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
-import com.example.footbal360.data.model.sections.Post
 import com.example.footbal360.ui.screens.competition.CompetitionScreen
 import com.example.footbal360.ui.screens.leagues.LeaguesScreen
-import com.example.footbal360.ui.screens.mainScreen.BottomSheetPostsViewModel
-import com.example.footbal360.ui.screens.mainScreen.ChipsViewModel
 import com.example.footbal360.ui.screens.mainScreen.MainScreenViewModel
 import com.example.footbal360.ui.screens.mainScreen.MainScreen
-import com.example.footbal360.ui.screens.mainScreen.StoriesViewModel
 import com.example.footbal360.ui.screens.matches.MatchesScreen
-import com.example.footbal360.ui.screens.videoPost.VideoPostScreen
-import com.example.footbal360.ui.screens.videoPost.VideoViewModelFactory
 import com.example.footbal360.ui.screens.videos.VideosScreen
 import com.example.footbal360.ui.screens.videos.VideosViewModel
 
@@ -46,19 +37,19 @@ fun MyNavigation(
                 navController = navController
             )
         }
-        composable(
-            Screens.VIDEO_POST.name + "/{data}",
-            arguments = listOf(
-                navArgument("data") { type = NavType.StringType }
-            )
-        ) { backStackEntry ->
-            VideoPostScreen(
-                navController = navController,
-                videoPostScreenViewModel = viewModel(
-                    factory = VideoViewModelFactory(backStackEntry.arguments?.getString("data"))
-                )
-            )
-        }
+//        composable(
+//            Screens.VIDEO_POST.name + "/{data}",
+//            arguments = listOf(
+//                navArgument("data") { type = NavType.StringType }
+//            )
+//        ) { backStackEntry ->
+//            VideoPostScreen(
+//                navController = navController,
+//                videoPostScreenViewModel = viewModel(
+//                    factory = VideoViewModelFactory(backStackEntry.arguments?.getString("data"))
+//                )
+//            )
+//        }
         composable(Screens.MATCHES.name) {
             MatchesScreen(navController = navController)
         }

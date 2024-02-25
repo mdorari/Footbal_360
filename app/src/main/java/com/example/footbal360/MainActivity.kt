@@ -1,7 +1,6 @@
 package com.example.footbal360
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -36,6 +35,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
@@ -44,42 +44,43 @@ import com.example.footbal360.data.FootballRepositoryImpl
 import com.example.footbal360.data.RetrofitInstance
 import com.example.footbal360.ui.screens.MyNavigation
 import com.example.footbal360.ui.screens.getBottomNavigationItems
-import com.example.footbal360.ui.screens.mainScreen.BottomSheetPostsViewModel
-import com.example.footbal360.ui.screens.mainScreen.ChipsViewModel
 import com.example.footbal360.ui.screens.mainScreen.MainScreenViewModel
-import com.example.footbal360.ui.screens.mainScreen.StoriesViewModel
 import com.example.footbal360.ui.screens.videos.VideosViewModel
 import com.example.footbal360.ui.theme.Background
 import com.example.footbal360.ui.theme.Footbal360Theme
 import com.example.footbal360.ui.theme.MainTextColor
 import com.example.footbal360.ui.theme.boldTypeFace
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val mainScreenViewModel by viewModels<MainScreenViewModel>(factoryProducer = {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return MainScreenViewModel(FootballRepositoryImpl(RetrofitInstance.api))
-                        as T
-            }
-        }
-    })
+//    private val mainScreenViewModel by viewModels<MainScreenViewModel>(factoryProducer = {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//                return MainScreenViewModel(FootballRepositoryImpl(RetrofitInstance.api))
+//                        as T
+//            }
+//        }
+//    })
 
-    private val videosViewModel by viewModels<VideosViewModel>(factoryProducer = {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return VideosViewModel(FootballRepositoryImpl(RetrofitInstance.api))
-                        as T
-            }
-        }
-    })
+//    private val videosViewModel by viewModels<VideosViewModel>(factoryProducer = {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//                return VideosViewModel(FootballRepositoryImpl(RetrofitInstance.api))
+//                        as T
+//            }
+//        }
+//    })
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             Footbal360Theme {
+                val mainScreenViewModel = hiltViewModel<MainScreenViewModel>()
+                val videosViewModel = hiltViewModel<VideosViewModel>()
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),

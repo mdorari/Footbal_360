@@ -8,6 +8,8 @@ import com.example.footbal360.data.Result
 import com.example.footbal360.data.model.chips.Chips
 import com.example.footbal360.data.model.sections.AllPosts
 import com.example.footbal360.data.model.story.Stories
+import com.example.footbal360.util.UiEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,8 +17,10 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainScreenViewModel(
+@HiltViewModel
+class MainScreenViewModel @Inject constructor(
     private val footballRepository: FootballRepository
 ) : ViewModel() {
 
@@ -37,6 +41,19 @@ class MainScreenViewModel(
     private val _showErrorToastChannel = Channel<Boolean>()
     val showErrorToastChannel = _showErrorToastChannel.receiveAsFlow()
 
+    private val _uiEvent = Channel<UiEvent>()
+    val uiEvent = _uiEvent.receiveAsFlow()
+
+    fun onEvent(event: MainScreenEvent){
+        when(event){
+            is MainScreenEvent.OnPostClick -> {
+                TODO()
+            }
+            MainScreenEvent.RefreshPage -> {
+                TODO()
+            }
+        }
+    }
 
     init {
         getSliderPosts()
@@ -115,24 +132,6 @@ class MainScreenViewModel(
             }
         }
     }
-
-//    fun getAllPosts() {
-//        viewModelScope.launch {
-//            footballRepository.getAllPosts().collectLatest { result ->
-//                when (result) {
-//                    is Result.Error -> {
-//                        _showErrorToastChannel.send(true)
-//                    }
-//
-//                    is Result.Success -> {
-//                        result.data?.let { allPosts ->
-//                            _allPosts.update { allPosts }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
 }
 
 
