@@ -1,16 +1,9 @@
 package com.example.footbal360.ui.screens
 
-enum class Screens {
-    MAIN,
-    VIDEOS,
-    MATCHES,
-    LEAGUES,
-    COMPETITION,
-    VIDEO_POST,
-    NORMAL_POST,
-    STORY
-}
-
+data class Screens (
+    val route:String,
+    val hasBottomNavBar:Boolean
+)
 
 /*
 other approach:

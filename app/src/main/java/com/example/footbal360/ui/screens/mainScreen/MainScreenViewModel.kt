@@ -8,6 +8,7 @@ import com.example.footbal360.data.Result
 import com.example.footbal360.data.model.chips.Chips
 import com.example.footbal360.data.model.sections.AllPosts
 import com.example.footbal360.data.model.story.Stories
+import com.example.footbal360.ui.screens.Routes
 import com.example.footbal360.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -38,22 +39,11 @@ class MainScreenViewModel @Inject constructor(
     private val _chips = MutableStateFlow<Chips>(Chips(data = emptyList()))
     val chips = _chips.asStateFlow()
 
-    private val _showErrorToastChannel = Channel<Boolean>()
-    val showErrorToastChannel = _showErrorToastChannel.receiveAsFlow()
+//    private val _showErrorToastChannel = Channel<Boolean>()
+//    val showErrorToastChannel = _showErrorToastChannel.receiveAsFlow()
 
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
-
-    fun onEvent(event: MainScreenEvent){
-        when(event){
-            is MainScreenEvent.OnPostClick -> {
-                TODO()
-            }
-            MainScreenEvent.RefreshPage -> {
-                TODO()
-            }
-        }
-    }
 
     init {
         getSliderPosts()
@@ -62,13 +52,40 @@ class MainScreenViewModel @Inject constructor(
         getBottomPosts()
     }
 
+    fun onEvent(event: MainScreenEvent) {
+        when (event) {
+            is MainScreenEvent.OnPostClick -> {
+                if (event.post.post_type == "V"){
+                    sendUiEvent(UiEvent.Navigate(Routes.VIDEO_POST + "?postId=${event.post.code}"))
+                } else{
+//                    TODO create normal post screen
+                    sendUiEvent(UiEvent.Navigate(Routes.VIDEO_POST + "?postId=${event.post.code}"))
+                }
+            }
+
+            is MainScreenEvent.RefreshPage -> {
+                TODO()
+            }
+
+            is MainScreenEvent.OnBottomNavbarItemClick -> {
+                sendUiEvent(UiEvent.Navigate(event.route))
+            }
+        }
+    }
+
+    private fun sendUiEvent(event: UiEvent) {
+        viewModelScope.launch {
+            _uiEvent.send(event)
+        }
+    }
+
 
     fun getSliderPosts() {
         viewModelScope.launch {
             footballRepository.getSliderPosts().collectLatest { result ->
                 when (result) {
                     is Result.Error -> {
-                        _showErrorToastChannel.send(true)
+//                        _showErrorToastChannel.send(true)
                     }
 
                     is Result.Success -> {
@@ -81,13 +98,14 @@ class MainScreenViewModel @Inject constructor(
         }
     }
 
-    fun getStories(){
+    fun getStories() {
         viewModelScope.launch {
-            footballRepository.getStories().collectLatest {result->
-                when(result){
+            footballRepository.getStories().collectLatest { result ->
+                when (result) {
                     is Result.Error -> {
                         Log.d("TAG", "getStories: ${result.message}")
                     }
+
                     is Result.Success -> {
                         result.data?.let { stories ->
                             _stories.update { stories }
@@ -98,15 +116,16 @@ class MainScreenViewModel @Inject constructor(
         }
     }
 
-    fun getBottomPosts(){
+    fun getBottomPosts() {
         viewModelScope.launch {
-            footballRepository.getBottomSheetPosts().collectLatest {result ->
-                when(result){
+            footballRepository.getBottomSheetPosts().collectLatest { result ->
+                when (result) {
                     is Result.Error -> {
                         Log.d("TAG", "getBottomPosts: ${result.message}")
                     }
+
                     is Result.Success -> {
-                        result.data?.let {allPosts ->
+                        result.data?.let { allPosts ->
                             _bottomPosts.update { allPosts }
                         }
                     }
@@ -115,15 +134,16 @@ class MainScreenViewModel @Inject constructor(
         }
     }
 
-    fun getChips(){
+    fun getChips() {
         viewModelScope.launch {
-            footballRepository.getYourChips().collectLatest {result ->
-                when(result){
+            footballRepository.getYourChips().collectLatest { result ->
+                when (result) {
                     is Result.Error -> {
                         Log.d("TAG", "getChips: ${result.message}")
                     }
+
                     is Result.Success -> {
-                        result.data?.let { yourChips->
+                        result.data?.let { yourChips ->
                             _chips.update { yourChips }
                         }
 

@@ -14,17 +14,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -32,7 +26,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
@@ -44,8 +37,6 @@ import coil.size.Size
 import com.example.footbal360.R
 import com.example.footbal360.data.model.story.Result
 import com.example.footbal360.ui.theme.MainTextColor
-import com.example.footbal360.ui.theme.Typography
-import com.example.footbal360.ui.theme.startingPadding
 import com.example.footbal360.ui.theme.storyCornerRadius
 import com.example.footbal360.ui.theme.storyPadding
 import com.example.footbal360.ui.theme.subtitleLineHeight
@@ -81,11 +72,9 @@ fun Story(
                 modifier = Modifier
                     .width(150.dp)
                     .height(200.dp)
-                    .clip(RoundedCornerShape(storyCornerRadius)),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
+                    .clip(RoundedCornerShape(storyCornerRadius))
+                    .shimmerEffect()
+            )
         }
         if (storyImageState is AsyncImagePainter.State.Error) {
             Box(

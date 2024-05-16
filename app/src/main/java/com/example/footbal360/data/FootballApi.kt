@@ -3,6 +3,7 @@ package com.example.footbal360.data
 import com.example.footbal360.data.model.chips.Chips
 import com.example.footbal360.data.model.sections.AllPosts
 import com.example.footbal360.data.model.story.Stories
+import com.example.footbal360.data.model.videoPost.VideoPost
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -90,7 +91,7 @@ interface FootballApi {
     https://football360.ir/api/cms/v2/posts/?code=2024021524
      */
     @GET("cms/v2/posts/")
-    suspend fun getPostByPostCode(@Query("code") code:String):AllPosts
+    suspend fun getPostByPostCode(@Query("code") code:Int):VideoPost
 
 
 
