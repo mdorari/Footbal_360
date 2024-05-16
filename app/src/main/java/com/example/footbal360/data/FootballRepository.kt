@@ -3,6 +3,7 @@ package com.example.footbal360.data
 import com.example.footbal360.data.model.chips.Chips
 import com.example.footbal360.data.model.sections.AllPosts
 import com.example.footbal360.data.model.story.Stories
+import com.example.footbal360.data.model.videoPost.VideoPost
 import kotlinx.coroutines.flow.Flow
 
 interface FootballRepository {
@@ -20,5 +21,5 @@ interface FootballRepository {
 
     suspend fun getAllVideosPosts():Flow<Result<AllPosts>>
 
-    suspend fun getPostByPostCode(postCode:String):Flow<Result<AllPosts>>
+    suspend fun getPostByPostCode(postCode:Int):Flow<Result<VideoPost>>
 }

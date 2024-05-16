@@ -3,60 +3,74 @@ package com.example.footbal360.ui.screens
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.footbal360.ui.screens.competition.CompetitionScreen
 import com.example.footbal360.ui.screens.leagues.LeaguesScreen
-import com.example.footbal360.ui.screens.mainScreen.MainScreenViewModel
 import com.example.footbal360.ui.screens.mainScreen.MainScreen
 import com.example.footbal360.ui.screens.matches.MatchesScreen
+import com.example.footbal360.ui.screens.videoPost.VideoPostScreen
 import com.example.footbal360.ui.screens.videos.VideosScreen
-import com.example.footbal360.ui.screens.videos.VideosViewModel
 
 @Composable
 fun MyNavigation(
     navController: NavHostController,
     paddingValues: PaddingValues,
-    mainScreenViewModel: MainScreenViewModel,
-    videosViewModel: VideosViewModel
+//    mainScreenViewModel: MainScreenViewModel,
+//    videosViewModel: VideosViewModel,
+//    videoPostScreenViewModel: VideoPostScreenViewModel
 ) {
     NavHost(
-        navController = navController, startDestination = Screens.MAIN.name
+        navController = navController,
+        startDestination = Routes.MAIN
     ) {
-        composable(Screens.MAIN.name) {
+        composable(Routes.MAIN) {
             MainScreen(
                 paddingValues = paddingValues,
-                mainScreenViewModel = mainScreenViewModel,
-                navController = navController
+//                viewModel = mainScreenViewModel,
+                navController = navController,
+                onNavigate = {
+                    navController.navigate(it.route)
+                }
             )
         }
-        composable(Screens.VIDEOS.name) {
+        composable(route = Routes.VIDEOS) {
             VideosScreen(
                 paddingValues = paddingValues,
-                videosViewModel = videosViewModel,
-                navController = navController
+//                videosViewModel = videosViewModel,
+                navController = navController,
+                onNavigate = {
+                    navController.navigate(it.route)
+                }
             )
         }
-//        composable(
-//            Screens.VIDEO_POST.name + "/{data}",
-//            arguments = listOf(
-//                navArgument("data") { type = NavType.StringType }
-//            )
-//        ) { backStackEntry ->
-//            VideoPostScreen(
+        composable(
+            route = Routes.VIDEO_POST + "?postId={postId}",
+            arguments = listOf(
+                navArgument(name = "postId") {
+                    type = NavType.IntType
+                    defaultValue = 1
+                }
+            )
+        ) {
+            VideoPostScreen(
+                paddingValues = paddingValues,
 //                navController = navController,
-//                videoPostScreenViewModel = viewModel(
-//                    factory = VideoViewModelFactory(backStackEntry.arguments?.getString("data"))
-//                )
-//            )
-//        }
-        composable(Screens.MATCHES.name) {
+//                videoPostScreenViewModel = videoPostScreenViewModel,
+                onNavigate = {
+                    navController.navigate(it.route)
+                }
+            )
+        }
+        composable(Routes.MATCHES) {
             MatchesScreen(navController = navController)
         }
-        composable(Screens.LEAGUES.name) {
+        composable(Routes.LEAGUES) {
             LeaguesScreen(navController = navController)
         }
-        composable(Screens.COMPETITION.name) {
+        composable(Routes.COMPETITION) {
             CompetitionScreen(navController = navController)
         }
     }

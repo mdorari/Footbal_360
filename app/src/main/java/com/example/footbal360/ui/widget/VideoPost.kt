@@ -38,19 +38,19 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.example.footbal360.R
 import com.example.footbal360.data.model.sections.Post
-import com.example.footbal360.ui.screens.mainScreen.MainScreenEvent
+import com.example.footbal360.ui.screens.videos.VideosScreenEvent
 import com.example.footbal360.ui.theme.sliderPadding
 import com.example.footbal360.ui.theme.titleTopAndBottomPadding
 
 @Composable
-fun SliderPost(
+fun VideoPost(
     post: Post,
     width:Dp,
     textSize:TextUnit,
     textLineHeight: TextUnit,
     cornerRadius:Dp,
-    onEvent: (MainScreenEvent) -> Unit,
-//    onItemClick: (Post) -> Unit = {}
+    onEvent: (VideosScreenEvent) -> Unit,
+    onItemClick: (Post) -> Unit = {}
 ) {
 
     val imageState = rememberAsyncImagePainter(
@@ -65,7 +65,7 @@ fun SliderPost(
             .fillMaxHeight()
             .width(width)
             .clickable {
-                onEvent(MainScreenEvent.OnPostClick(post = post, postType = post.post_type))
+                onEvent(VideosScreenEvent.OnPostClick(post = post))
 //                       onItemClick(post)
             },
         contentAlignment = Alignment.TopCenter

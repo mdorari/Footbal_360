@@ -7,14 +7,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -80,11 +78,10 @@ fun BottomSection(data: Data) {
             Box(
                 modifier = Modifier
                     .height(220.dp)
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(10.dp))
+                    .shimmerEffect()
+            )
         }
         if (bannerImageState is AsyncImagePainter.State.Error) {
             Box(
@@ -164,11 +161,10 @@ fun BottomSection(data: Data) {
                         Box(
                             modifier = Modifier
                                 .width(130.dp)
-                                .aspectRatio(1.78f),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator()
-                        }
+                                .aspectRatio(1.78f)
+                                .clip(RoundedCornerShape(4.dp))
+                                .shimmerEffect()
+                        )
                     }
                     if (postImageState is AsyncImagePainter.State.Error) {
                         Box(
