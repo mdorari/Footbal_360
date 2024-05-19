@@ -1,5 +1,6 @@
 package com.example.footbal360.ui.widget
 
+import android.os.Build
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -7,14 +8,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -43,6 +42,7 @@ import com.example.footbal360.ui.theme.subtitleTextSize
 import com.example.footbal360.ui.theme.titleLineHeight
 import com.example.footbal360.ui.theme.titleTextSize
 import com.example.footbal360.ui.theme.titleTopAndBottomPadding
+import com.example.footbal360.util.timeDifference
 
 @Composable
 fun BottomSection(data: Data) {
@@ -80,11 +80,10 @@ fun BottomSection(data: Data) {
             Box(
                 modifier = Modifier
                     .height(220.dp)
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(10.dp))
+                    .shimmerEffect()
+            )
         }
         if (bannerImageState is AsyncImagePainter.State.Error) {
             Box(
@@ -164,11 +163,10 @@ fun BottomSection(data: Data) {
                         Box(
                             modifier = Modifier
                                 .width(130.dp)
-                                .aspectRatio(1.78f),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator()
-                        }
+                                .aspectRatio(1.78f)
+                                .clip(RoundedCornerShape(4.dp))
+                                .shimmerEffect()
+                        )
                     }
                     if (postImageState is AsyncImagePainter.State.Error) {
                         Box(
@@ -216,18 +214,35 @@ fun BottomSection(data: Data) {
                         }
                     }
 
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = post.title,
-                        textAlign = TextAlign.Start,
-                        style = TextStyle(textDirection = TextDirection.Content),
-                        fontFamily = FontFamily(Font(R.font.iran_sansx_demi_bold)),
-                        color = MainTextColor,
-                        fontSize = subtitleTextSize,
-                        lineHeight = subtitleLineHeight,
-                        maxLines = 3,
-                        letterSpacing = (-0.05).sp
-                    )
+                    Column (modifier = Modifier.fillMaxWidth()){
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = post.title,
+                            textAlign = TextAlign.Start,
+                            style = TextStyle(textDirection = TextDirection.Content),
+                            fontFamily = FontFamily(Font(R.font.iran_sansx_demi_bold)),
+                            color = MainTextColor,
+                            fontSize = subtitleTextSize,
+                            lineHeight = subtitleLineHeight,
+                            maxLines = 3,
+                            letterSpacing = (-0.05).sp
+                        )
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            Text(
+                                modifier = Modifier.fillMaxWidth(),
+                                text = timeDifference(post.published_at.toLong()),
+                                textAlign = TextAlign.Start,
+                                style = TextStyle(textDirection = TextDirection.Content),
+                                fontFamily = FontFamily(Font(R.font.iran_sansx_demi_bold)),
+                                color = Color.DarkGray,
+                                fontSize = subtitleTextSize/2,
+                                lineHeight = subtitleLineHeight,
+                                maxLines = 3,
+                                letterSpacing = (-0.05).sp
+                            )
+                        }
+
+                    }
                 }
                 Spacer(
                     modifier = Modifier
@@ -238,69 +253,3 @@ fun BottomSection(data: Data) {
         }
     }
 }
-
-//                items(posts) { post ->
-//                    val postImageState = rememberAsyncImagePainter(
-//                        model = ImageRequest
-//                            .Builder(LocalContext.current)
-//                            .data(post.primary_media)
-//                            .size(Size.ORIGINAL)
-//                            .build()
-//                    ).state
-//                    if (postImageState is AsyncImagePainter.State.Success) {
-//                        Row {
-//                            Image(
-//                                modifier = Modifier
-//                                    .fillMaxWidth()
-//                                    .height(50.dp)
-//                                    .clip(RoundedCornerShape(2.dp)),
-//                                painter = postImageState.painter,
-//                                contentDescription = post.title,
-//                                contentScale = ContentScale.Crop
-//                            )
-//                            Text(modifier = Modifier.fillMaxWidth().weight(1f),
-//                                text = post.title,
-//                                textAlign = TextAlign.End,
-//                                fontFamily = FontFamily(Font(R.font.iran_sansx_demi_bold)),
-//                                color = MainTextColor,
-//                                fontSize = subtitleTextSize)
-//                        }
-//                    }
-//
-//                }
-
-
-//fun LazyListScope.bottomLazyColumn(posts: List<Post>) {
-//    items(posts) { post ->
-//        val postImageState = rememberAsyncImagePainter(
-//            model = ImageRequest
-//                .Builder(LocalContext.current)
-//                .data(post.primary_media)
-//                .size(Size.ORIGINAL)
-//                .build()
-//        ).state
-//        if (postImageState is AsyncImagePainter.State.Success) {
-//            Row {
-//                Image(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .height(50.dp)
-//                        .clip(RoundedCornerShape(2.dp)),
-//                    painter = postImageState.painter,
-//                    contentDescription = post.title,
-//                    contentScale = ContentScale.Crop
-//                )
-//                Text(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .weight(1f),
-//                    text = post.title,
-//                    textAlign = TextAlign.End,
-//                    fontFamily = FontFamily(Font(R.font.iran_sansx_demi_bold)),
-//                    color = MainTextColor,
-//                    fontSize = subtitleTextSize
-//                )
-//            }
-//        }
-//    }
-//}

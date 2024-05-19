@@ -4,6 +4,7 @@ package com.example.footbal360.data
 import com.example.footbal360.data.model.chips.Chips
 import com.example.footbal360.data.model.sections.AllPosts
 import com.example.footbal360.data.model.story.Stories
+import com.example.footbal360.data.model.videoPost.VideoPost
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException
@@ -131,7 +132,7 @@ class FootballRepositoryImpl(
         }
     }
 
-    override suspend fun getPostByPostCode(postCode:String): Flow<Result<AllPosts>> {
+    override suspend fun getPostByPostCode(postCode:Int): Flow<Result<VideoPost>> {
         return flow {
             val postFromApi = try {
                 api.getPostByPostCode(postCode)

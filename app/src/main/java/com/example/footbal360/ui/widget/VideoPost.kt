@@ -1,6 +1,5 @@
 package com.example.footbal360.ui.widget
 
-import android.os.Build
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -39,20 +38,19 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.example.footbal360.R
 import com.example.footbal360.data.model.sections.Post
-import com.example.footbal360.ui.screens.mainScreen.MainScreenEvent
+import com.example.footbal360.ui.screens.videos.VideosScreenEvent
 import com.example.footbal360.ui.theme.sliderPadding
 import com.example.footbal360.ui.theme.titleTopAndBottomPadding
-import com.example.footbal360.util.timeDifference
 
 @Composable
-fun SliderPost(
+fun VideoPost(
     post: Post,
     width:Dp,
     textSize:TextUnit,
     textLineHeight: TextUnit,
     cornerRadius:Dp,
-    onEvent: (MainScreenEvent) -> Unit,
-//    onItemClick: (Post) -> Unit = {}
+    onEvent: (VideosScreenEvent) -> Unit,
+    onItemClick: (Post) -> Unit = {}
 ) {
 
     val imageState = rememberAsyncImagePainter(
@@ -67,7 +65,7 @@ fun SliderPost(
             .fillMaxHeight()
             .width(width)
             .clickable {
-                onEvent(MainScreenEvent.OnPostClick(post = post, postType = post.post_type))
+                onEvent(VideosScreenEvent.OnPostClick(post = post))
 //                       onItemClick(post)
             },
         contentAlignment = Alignment.TopCenter
@@ -143,21 +141,6 @@ fun SliderPost(
                 textAlign = TextAlign.Start,
                 style = TextStyle(textDirection = TextDirection.Content)
             )
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    text = timeDifference(post.published_at.toLong()),
-                    fontSize = textSize/2,
-                    fontFamily = FontFamily(Font(R.font.iran_sansx_bold)),
-                    fontStyle = FontStyle.Normal,
-                    lineHeight = textLineHeight,
-                    color = Color.DarkGray,
-                    fontWeight = FontWeight.Normal,
-                    textAlign = TextAlign.Start,
-                    style = TextStyle(textDirection = TextDirection.Content)
-                )
-            }
 //                Text(text = post.sub_title)
         }
     }
