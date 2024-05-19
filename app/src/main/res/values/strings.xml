@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Footbal 360</string>
+    <string name="days_ago"> روز پیش </string>
+    <string name="hours_ago">ساعت پیش</string>
+    <string name="minutes_ago">دقیقه پیش</string>
+    <string name="now">الآن</string>
 </resources>

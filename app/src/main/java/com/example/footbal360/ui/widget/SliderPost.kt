@@ -1,5 +1,6 @@
 package com.example.footbal360.ui.widget
 
+import android.os.Build
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -41,6 +42,7 @@ import com.example.footbal360.data.model.sections.Post
 import com.example.footbal360.ui.screens.mainScreen.MainScreenEvent
 import com.example.footbal360.ui.theme.sliderPadding
 import com.example.footbal360.ui.theme.titleTopAndBottomPadding
+import com.example.footbal360.util.timeDifference
 
 @Composable
 fun SliderPost(
@@ -141,6 +143,21 @@ fun SliderPost(
                 textAlign = TextAlign.Start,
                 style = TextStyle(textDirection = TextDirection.Content)
             )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    text = timeDifference(post.published_at.toLong()),
+                    fontSize = textSize/2,
+                    fontFamily = FontFamily(Font(R.font.iran_sansx_bold)),
+                    fontStyle = FontStyle.Normal,
+                    lineHeight = textLineHeight,
+                    color = Color.DarkGray,
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Start,
+                    style = TextStyle(textDirection = TextDirection.Content)
+                )
+            }
 //                Text(text = post.sub_title)
         }
     }
