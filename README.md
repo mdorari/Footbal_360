@@ -14,8 +14,7 @@ Implement in-app internet explorer to open pages
 Add ofline mode to catch some data and load them if user is not online.
 
 
-![image](https://github.com/mdorari/Footbal_360/assets/111634592/22ff88c6-80ec-4720-9f29-70f10d94a566)
+![shimmer](https://github.com/mdorari/Footbal_360/assets/111634592/6b6608d7-dc5d-486a-8c05-2f7490dbd673)
 
-![image](https://github.com/mdorari/Footbal_360/assets/111634592/2d282e41-f6e7-45c1-8e90-783d92233aeb)
 
-![image](https://github.com/mdorari/Footbal_360/assets/111634592/4a923389-f70d-4a15-bb4e-02d2ad5f3724)
+![screenshot1](https://github.com/mdorari/Footbal_360/assets/111634592/64c5203c-85f4-4edc-bc77-f93ab3848ae4)
